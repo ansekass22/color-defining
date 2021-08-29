@@ -1,9 +1,10 @@
 from tkinter import *
-
+#the UI is made using Tkinter-library of Python
 root = Tk()
 root.title('Väritesti')
 
-def slide(var):
+#this function handles actions after the slides are used
+def slide(var): 
     redPix = hex(punaSkaala.get())
     if punaSkaala.get() < 16:
         redPix = redPix[::2]
@@ -19,19 +20,21 @@ def slide(var):
     hexaLabel = Label(root, text="#"+redPix[-2:]+grnPix[-2:]+bluPix[-2:])
     hexaLabel.grid(row=5, column=0, columnspan=4)
 
-def pienenna(tamaSkaala):
+#this function handles the action of decreasing-button
+def pienenna(tamaSkaala): 
     nykArvo = tamaSkaala.get()
     tamaSkaala.set(nykArvo - 1)
 
-def suurenna(tamaSkaala):
+#this function handles the action of increasing-button
+def suurenna(tamaSkaala): 
     nykArvo = tamaSkaala.get()
     tamaSkaala.set(nykArvo + 1)
 
-#säätimet värikomponenttien säätelyyn    
-punaSkaala = Scale(root, from_=0, to=255, orient=HORIZONTAL, command=slide, length=300)
-viherSkaala = Scale(root, from_=0, to=255, orient=HORIZONTAL, command=slide, length=300)
-siniSkaala = Scale(root, from_=0, to=255, orient=HORIZONTAL, command=slide, length=300)
-
+#scales for each components of colour    
+punaSkaala = Scale(root, from_=0, to=255, orient=HORIZONTAL, command=slide, length=300) #red
+viherSkaala = Scale(root, from_=0, to=255, orient=HORIZONTAL, command=slide, length=300) #green
+siniSkaala = Scale(root, from_=0, to=255, orient=HORIZONTAL, command=slide, length=300) #blue
+#placing the scales on the window
 punaSkaala.grid(row=0, column=1)
 viherSkaala.grid(row=1, column=1)
 siniSkaala.grid(row=2, column=1)
@@ -40,15 +43,15 @@ punaLabel = Label(root, text="Punaisen osuus", bg="red")
 viherLabel = Label(root, text="Vihreän osuus", bg="green")
 siniLabel = Label(root, text="Sinisen osuus", bg="blue")
 
-#Säätönappulat hienovaraisempaan säätöön
-punaMinus = Button(root, text="-", command=lambda:pienenna(punaSkaala))
-punaPlus = Button(root, text="+", command=lambda:suurenna(punaSkaala))
-viherMinus = Button(root, text="-", command=lambda:pienenna(viherSkaala))
-viherPlus = Button(root, text="+", command=lambda:suurenna(viherSkaala))
-siniMinus = Button(root, text="-", command=lambda:pienenna(siniSkaala))
-siniPlus = Button(root, text="+", command=lambda:suurenna(siniSkaala))
+#buttons for more discreet controlling
+punaMinus = Button(root, text="-", command=lambda:pienenna(punaSkaala)) # R-value--
+punaPlus = Button(root, text="+", command=lambda:suurenna(punaSkaala)) # R-value++
+viherMinus = Button(root, text="-", command=lambda:pienenna(viherSkaala)) # G-value-- 
+viherPlus = Button(root, text="+", command=lambda:suurenna(viherSkaala)) # G-value++
+siniMinus = Button(root, text="-", command=lambda:pienenna(siniSkaala)) #B-value--
+siniPlus = Button(root, text="+", command=lambda:suurenna(siniSkaala)) #B-value++
 
-#kertoo nykyisen värin RGB-arvon heksadesimaalimuodossa
+#tells the RGB value of the current colour in hexadecimals
 hexaLabel = Label(root, text="#000000")
 
 punaLabel.grid(row=0, column=0)
@@ -64,10 +67,10 @@ siniPlus.grid(row=2, column=3)
 
 hexaLabel.grid(row=5, column=0, columnspan=4)
 
-#kenttä, joka näyttää säädetyn värin
 nappi = Button(root, text="Sulje", command=root.destroy)
 nappi.grid(row=3, column=0, columnspan=2)
 
+#this canvas shows the colour made of RGB-parameters
 kangas = Canvas(root, bg="#000000", height=400, width=400)
 
 kangas.grid(row=4, column=0, columnspan=4)
